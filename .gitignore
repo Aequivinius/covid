@@ -3,3 +3,6 @@ venv
 *.ipynb
 pipeline
 data
+biobert
+oger
+
