@@ -1,5 +1,9 @@
+.venv
 venv
 .ip*
 *.ipynb
 pipeline
 data
+biobert
+oger
+
