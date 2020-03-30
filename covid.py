@@ -16,14 +16,18 @@ def get_pmids():
 def conll_to_json():
 	pl = PipelineServer(Router())
 	
-	title = ''
+	title = False
 	
 	for f in glob.glob('data/oger/*/*.conll'):
+		print(f)
 		pmid = os.path.splitext(os.path.basename(f))[0]
 		if not pmid.startswith('collection'):
 	
 			doc = pl.load_one(f, 'conll')
-			title = doc[0][0].text
+			try:
+				title = doc[0][0].text
+			except:
+				i=0
 	
 			category = os.path.split(os.path.dirname(f))[-1]
 			directory = os.path.join('data/oger_json/', category)
@@ -38,9 +42,11 @@ def conll_to_json():
 				bad_json['sourcedb'] = 'pubmed'
 				bad_json['sourceid'] = pmid
 	
-				t = bad_json['text']
-				tl = len(title)
-				bad_json['text'] = t[tl:] + ' ' + t[:tl]
+				if title:
+					t = bad_json['text']
+					tl = len(title)
+					bad_json['text'] = t[tl:] + ' ' + t[:tl].strip()
+					
 				good_json = bad_json
 				g.seek(0)
 				json.dump(good_json, g)
