@@ -53,4 +53,4 @@ def conll_to_json():
 
 	
 if __name__== "__main__":
-  get_pmids()
+  conll_to_json()
