@@ -39,7 +39,7 @@ def conll_to_json():
 				pl.write(doc, 'pubanno_json', g)
 			with open(outfile, 'r+', encoding='utf8') as g:
 				bad_json = json.load(g)
-				bad_json['sourcedb'] = 'pubmed'
+				bad_json['sourcedb'] = 'PubMed'
 				bad_json['sourceid'] = pmid
 	
 				if title:
