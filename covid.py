@@ -8,6 +8,9 @@ import json
 
 import tarfile
 
+VOCABULARY = "CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON"
+VOCABULARIES = VOCABULARY.split()
+
 def get_pmids():
 	url = 'https://www.ncbi.nlm.nih.gov/research/coronavirus-api/export?'
 	urllib.request.urlretrieve(url,'data/pmids.tsv')
@@ -53,11 +56,18 @@ def conll_to_json():
 				g.seek(0)
 				json.dump(good_json, g)
 
-def tar_all_json():
-	tar = tarfile.open("data/all.tgz", "w:gz")
-	for name in glob.glob('data/oger_json/*/*.json'):
-		tar.add(name,arcname=os.path.basename(name))
-	tar.close()
+def tar_json():
+
+	tarall = tarfile.open("data/oger_json/all.tgz", "w:gz")
+	for v in VOCABULARIES:
+		tarsingle = tarfile.open("data/oger_json/" + v + ".tgz", "w:gz")
+		for name in glob.glob("data/oger_json/" + v + "/*"):
+			category = os.path.split(os.path.dirname(name))[-1]
+			tarsingle.add(name,arcname=os.path.basename(name))
+			tarall.add(name,arcname=category + "_" + os.path.basename(name))
+		tarsingle.close()
+	tarall.close()
+
 	
 if __name__== "__main__":
-  conll_to_json()
+  tar_json()
