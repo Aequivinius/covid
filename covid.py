@@ -45,7 +45,7 @@ def conll_to_json():
 				if title:
 					t = bad_json['text']
 					tl = len(title)
-					bad_json['text'] = t[tl:] + ' ' + t[:tl].strip()
+					bad_json['text'] = t[:tl] + ' ' + t[tl:].strip()
 					
 				good_json = bad_json
 				g.seek(0)
