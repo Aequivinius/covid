@@ -6,6 +6,8 @@ import glob
 import os
 import json
 
+import tarfile
+
 def get_pmids():
 	url = 'https://www.ncbi.nlm.nih.gov/research/coronavirus-api/export?'
 	urllib.request.urlretrieve(url,'data/pmids.tsv')
@@ -36,7 +38,7 @@ def conll_to_json():
 	
 			outfile = os.path.join(directory, pmid + '.json')
 			with open(outfile, 'w', encoding='utf8') as g:
-				pl.write(doc, 'pubanno_json', g)
+				pl.write(doc, 'oger_pubanno_json', g)
 			with open(outfile, 'r+', encoding='utf8') as g:
 				bad_json = json.load(g)
 				bad_json['sourcedb'] = 'PubMed'
@@ -51,6 +53,11 @@ def conll_to_json():
 				g.seek(0)
 				json.dump(good_json, g)
 
+def tar_all_json():
+	tar = tarfile.open("data/all.tgz", "w:gz")
+	for name in glob.glob('data/oger_json/*/*.json'):
+		tar.add(name,arcname=os.path.basename(name))
+	tar.close()
 	
 if __name__== "__main__":
   conll_to_json()
