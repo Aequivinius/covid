@@ -1,12 +1,8 @@
 import pandas as pd
 import urllib.request
-
-from oger.ctrl.router import Router, PipelineServer
-import glob
 import os
 import json
-
-import tarfile
+from oger.ctrl.router import Router, PipelineServer
 
 VOCABULARY = "CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON"
 VOCABULARIES = VOCABULARY.split()
@@ -17,57 +13,31 @@ def get_pmids():
 	dataf = pd.read_csv('data/pmids.tsv', sep='\t', comment='#')
 	dataf = dataf['pmid'][~dataf['pmid'].isin(['32150360', '32104909', '32090470'])]
 	dataf.to_csv('data/pmids.txt', sep=' ', index=False, header=False)
-	
-def conll_to_json():
+
+def conll_collection_to_jsons():
 	pl = PipelineServer(Router())
-	
-	title = False
-	
-	for f in glob.glob('data/oger/*/*.conll'):
-		print(f)
-		pmid = os.path.splitext(os.path.basename(f))[0]
-		if not pmid.startswith('collection'):
-	
-			doc = pl.load_one(f, 'conll')
-			try:
-				title = doc[0][0].text
-			except:
-				i=0
-	
-			category = os.path.split(os.path.dirname(f))[-1]
-			directory = os.path.join('data/oger_json/', category)
+	for v in VOCABULARIES:
+		f = os.path.join('data/harmonised/', v + '.conll')
+
+		collection = pl.load_one(f, 'conll')
+		for document in collection:
+			title = document[0].text
+			pmid = document.id_
+			directory = os.path.join('data/harmonised_json/',v)
 			if not os.path.exists(directory):
 				os.makedirs(directory)
-	
+
 			outfile = os.path.join(directory, pmid + '.json')
 			with open(outfile, 'w', encoding='utf8') as g:
-				pl.write(doc, 'oger_pubanno_json', g)
+				pl.write(document, 'pubanno_json', g)
 			with open(outfile, 'r+', encoding='utf8') as g:
 				bad_json = json.load(g)
-				bad_json['sourcedb'] = 'PubMed'
+				bad_json['sourcedb'] = 'pubmed'
 				bad_json['sourceid'] = pmid
-	
-				if title:
-					t = bad_json['text']
-					tl = len(title)
-					bad_json['text'] = t[:tl] + ' ' + t[tl:].strip()
-					
+
+				t = bad_json['text']
+				tl = len(title)
+				bad_json['text'] = t[:tl] + ' ' + t[tl:]
 				good_json = bad_json
 				g.seek(0)
 				json.dump(good_json, g)
-
-def tar_json():
-
-	tarall = tarfile.open("data/oger_json/all.tgz", "w:gz")
-	for v in VOCABULARIES:
-		tarsingle = tarfile.open("data/oger_json/" + v + ".tgz", "w:gz")
-		for name in glob.glob("data/oger_json/" + v + "/*"):
-			category = os.path.split(os.path.dirname(name))[-1]
-			tarsingle.add(name,arcname=os.path.basename(name))
-			tarall.add(name,arcname=category + "_" + os.path.basename(name))
-		tarsingle.close()
-	tarall.close()
-
-	
-if __name__== "__main__":
-  tar_json()
