@@ -21,7 +21,7 @@ def pmctsv_to_txt(inpath):
     dataf['PMCID'].replace("", numpy.nan, inplace=True)
     dataf.dropna(subset=['PMCID'], inplace=True)
     
-    outpath = os.path.join(os.path.dirname(inpath),'pmcid.txt')
+    outpath = os.path.join(os.path.dirname(inpath),'pmcids.txt')
     dataf['PMCID'].to_csv(outpath, index=False, header=False)
 
 def conll_collection_to_jsons():
