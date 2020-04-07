@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy
 import urllib.request
 import os
 import json
@@ -13,6 +14,15 @@ def get_pmids():
 	dataf = pd.read_csv('data/pmids.tsv', sep='\t', comment='#')
 	dataf = dataf['pmid'][~dataf['pmid'].isin(['32150360', '32104909', '32090470'])]
 	dataf.to_csv('data/pmids.txt', sep=' ', index=False, header=False)
+
+def pmctsv_to_txt(inpath):
+    dataf = pd.read_csv(inpath,header=0,delimiter='\t')
+    dataf['PMCID'] = dataf['PMCID'].str.slice(3)
+    dataf['PMCID'].replace("", numpy.nan, inplace=True)
+    dataf.dropna(subset=['PMCID'], inplace=True)
+    
+    outpath = os.path.join(os.path.dirname(inpath),'pmcid.txt')
+    dataf['PMCID'].to_csv(outpath, index=False, header=False)
 
 def conll_collection_to_jsons():
 	pl = PipelineServer(Router())
