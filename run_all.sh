@@ -3,7 +3,7 @@
 home=$(pwd)
 
 echo '0: Creating directories'
-mkdir data data/pmids/ data/oger/ data/biobert/ data/harmonised_conll/
+mkdir data data/ids/ data/oger/ data/biobert/ data/harmonised_conll/
 
 echo '1: Downloading PMIDs'
 python -c 'import covid; covid.get_pmids()'
@@ -21,7 +21,7 @@ cd home/bert
 echo '3: Preprocessing for BB'
 python3 biobert_predict.py \
 --do_preprocess=true \
---input_text=../data/oger_collection/CL/collection_2020-04-02_140110.conll \
+--input_text=../data/oger_collection/CL.conll \
 --tf_record=../data/biobert_collection_tokens/collection.tf_record \
 --vocab_file=common/vocab.txt
 

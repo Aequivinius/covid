@@ -1,9 +1,12 @@
 .venv
 .ip*
 *.ipynb
-data
 ._*
 __*
+*.pyc
+Pipfile*
+
+data
 
 biobert
 oger
