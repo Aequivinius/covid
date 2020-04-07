@@ -1,9 +1,10 @@
 .venv
-venv
 .ip*
 *.ipynb
-pipeline
 data
+._*
+__*
+
 biobert
 oger
 
