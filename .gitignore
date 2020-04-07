@@ -1,9 +1,8 @@
-.venv
-venv
-.ip*
 *.ipynb
-pipeline
+*.pyc
+Pipfile*
 data
+
 biobert
 oger
 
