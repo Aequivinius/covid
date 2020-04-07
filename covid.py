@@ -9,11 +9,13 @@ VOCABULARY = "CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON"
 VOCABULARIES = VOCABULARY.split()
 
 def get_pmids():
-	url = 'https://www.ncbi.nlm.nih.gov/research/coronavirus-api/export?'
-	urllib.request.urlretrieve(url,'data/ids/pmids.tsv')
-	dataf = pd.read_csv('data/ids/pmids.tsv', sep='\t', comment='#')
-	dataf = dataf['pmid'][~dataf['pmid'].isin(['32150360', '32104909', '32090470'])]
-	dataf.to_csv('data/pmids.txt', sep=' ', index=False, header=False)
+    url = 'https://www.ncbi.nlm.nih.gov/research/coronavirus-api/export?'
+    urllib.request.urlretrieve(url, 'data/ids/pmids.tsv')
+    dataf = pd.read_csv('data/ids/pmids.tsv', sep='\t', comment='#')
+    dataf = dataf['pmid'][~dataf['pmid'].isin(['32150360',
+                                               '32104909',
+                                               '32090470'])]
+    dataf.to_csv('data/pmids.txt', sep=' ', index=False, header=False)
 
 def pmctsv_to_txt(inpath):
     dataf = pd.read_csv(inpath,header=0,delimiter='\t')
