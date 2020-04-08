@@ -30,29 +30,29 @@ def pmctsv_to_txt(inpath):
     dataf['PMCID'].to_csv(outpath, index=False, header=False)
 
 def conll_collection_to_jsons():
-	pl = PipelineServer(Router())
-	for v in VOCABULARIES:
-		f = os.path.join('data/harmonised/', v + '.conll')
+    pl = PipelineServer(Router())
+    for v in VOCABULARIES:
+        f = os.path.join('data/harmonised/', v + '.conll')
 
-		collection = pl.load_one(f, 'conll')
-		for document in collection:
-			title = document[0].text
-			pmid = document.id_
-			directory = os.path.join('data/harmonised_json/',v)
-			if not os.path.exists(directory):
-				os.makedirs(directory)
+        collection = pl.load_one(f, 'conll')
+        for document in collection:
+            title = document[0].text
+            pmid = document.id_
+            directory = os.path.join('data/harmonised_json/', v)
+            if not os.path.exists(directory):
+                os.makedirs(directory)
 
-			outfile = os.path.join(directory, pmid + '.json')
-			with open(outfile, 'w', encoding='utf8') as g:
-				pl.write(document, 'pubanno_json', g)
-			with open(outfile, 'r+', encoding='utf8') as g:
-				bad_json = json.load(g)
-				bad_json['sourcedb'] = 'pubmed'
-				bad_json['sourceid'] = pmid
+            outfile = os.path.join(directory, pmid + '.json')
+            with open(outfile, 'w', encoding='utf8') as g:
+                pl.write(document, 'pubanno_json', g)
+            with open(outfile, 'r+', encoding='utf8') as g:
+                bad_json = json.load(g)
+                bad_json['sourcedb'] = 'pubmed'
+                bad_json['sourceid'] = pmid
 
-				t = bad_json['text']
-				tl = len(title)
-				bad_json['text'] = t[:tl] + ' ' + t[tl:]
-				good_json = bad_json
-				g.seek(0)
-				json.dump(good_json, g)
+                t = bad_json['text']
+                tl = len(title)
+                bad_json['text'] = t[:tl] + ' ' + t[tl:]
+                good_json = bad_json
+                g.seek(0)
+                json.dump(good_json, g)
