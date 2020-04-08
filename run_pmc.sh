@@ -35,15 +35,15 @@ for s in ids spans
 do
 
 echo '3: BB for' $v-$s
-mkdir ../data/biobert/$v-$s
+mkdir ../data/biobert_pmc/$v-$s
 
 python3 biobert_predict.py \
 	--do_predict=true \
-	--tf_record=../data/biobert_tokens.tf_record \
+	--tf_record=../data/biobert_pmc_tokens.tf_record \
 	--bert_config_file=common/bert_config.json \
 	--init_checkpoint=models/$v-$s/model.ckpt-${vocabularies[${v}]} \
 	--data_dir=models/$v-$s \
-	--output_dir=../data/biobert/$v-$s \
+	--output_dir=../data/biobert_pmc/$v-$s \
 	--configuration=$s
 
 done
