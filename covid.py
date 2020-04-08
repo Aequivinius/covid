@@ -23,6 +23,9 @@ def pmctsv_to_txt(inpath):
     dataf['PMCID'].replace("", numpy.nan, inplace=True)
     dataf.dropna(subset=['PMCID'], inplace=True)
     
+    # this article is somehow not available on PMC
+    dataf = dataf[dataf['PMCID'] != '7068758']
+
     outpath = os.path.join(os.path.dirname(inpath),'pmcids.txt')
     dataf['PMCID'].to_csv(outpath, index=False, header=False)
 

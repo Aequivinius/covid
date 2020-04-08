@@ -1,6 +1,11 @@
+.venv
+.ip*
 *.ipynb
+._*
+__*
 *.pyc
 Pipfile*
+
 data
 
 biobert
