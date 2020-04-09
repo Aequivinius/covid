@@ -11,23 +11,25 @@ CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
 2. OGER is first called: It downloads the articles and annotates them. For every vocabulary, it generates one big `VOCABULARY.conll` file containing all the articles and annotations in `data/oger/`. 
 3. BioBert preprocessed the articles, and then predicts spans and ids for each of the vocabularies (into `data/biobert/CHEBI-ids.labels` etc.)
 4. The outputs of OGER and BB are harmonised using `harmonise.py`, split into individual articles and converted to `.json`. For every vocabulary, a `.tgz`-archive containing those `.json` files is produced (`data/harmonised_json/CHEBI.tgz`).
-5. The archives can be manually uploaded to PubAnnotation.
+5. An additional merge step joins the 10 different vocabulary files, and searches the document again using a covid-specific, manually crafted dictionary (`oger/merge/covid19.tsv`)
+6. The archives can be manually uploaded to PubAnnotation.
 
 ### 1.2 `data` directory
 
 ```
 data
-|--- pmids # list of ids to download
-|--- oger
+|--- ids # list of ids to download
+|--- oger (_pmc)
      |--- CL.conll # most recent OGER annotations
      |--- CHEBI.conll
      |--- ...
-|--- biobert
+|--- biobert (_pmc)
      |--- CHEBI-ids.labels
      |--- CHEBI-spans.labels
      |--- ...
 |--- biobert_tokens.tf_record # preprocessing material
-|--- harmonised_conll
+|--- biobert_tokens_pmc.tf_record
+|--- harmonised_conll (_pmc)
      |--- CL.conll
      |--- CHEBI.conll
      |--- ...
@@ -137,8 +139,10 @@ for v in "${!vocabularies[@]}"
 do
 python harmonise.py -t data/harmonised_conll/$v.conll -o data/oger/$v.conll -b data/biobert_tokens/collection.tokens -i data/biobert/$v-ids.labels -s data/biobert/$v-spans.labels -m ${vocabularies[$v]}
 ```
+### 2.5 merging
+`oger run -s oger-settings-all.ini`
 
-### 2.5 Upload to PubAnnotation
+### 2.6 Upload to PubAnnotation
 
 * the harmonised `.conll`-collection files are split into individual articles and converted into `.json`, and `.tgz`-archived so they can be uploaded to PA.
 
