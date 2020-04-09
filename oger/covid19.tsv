@@ -1,0 +1,251 @@
+CUI-less	COVID	BV_1	antibody response	antibody response	BioVoc
+CUI-less	COVID	BV_2	B-cell assays	B-cell assays	BioVoc
+CUI-less	COVID	BV_3	B-cell epitopes	B-cell epitopes	BioVoc
+CUI-less	COVID	BV_4	bronchoalveolar lavage fluid	bronchoalveolar lavage fluid	BioVoc
+CUI-less	COVID	BV_4	BALF	BALF	BioVoc
+CUI-less	COVID	BV_5	conformational masking	conformational masking	BioVoc
+CUI-less	COVID	BV_6	cross-neutralization	cross-neutralization	BioVoc
+CUI-less	COVID	BV_7	cross-neutralizing antibody	cross-neutralizing antibody	BioVoc
+CUI-less	COVID	BV_7	cross-neutralizing antibodies	cross-neutralizing antibody	BioVoc
+CUI-less	COVID	BV_8	Cryo-EM structure	Cryo-EM structure	BioVoc
+CUI-less	COVID	BV_9	epitope	epitope	BioVoc
+CUI-less	COVID	BV_9	epitopes	epitope	BioVoc
+CUI-less	COVID	BV_10	glycan shielding	glycan shielding	BioVoc
+CUI-less	COVID	BV_11	glycoprotein	glycoprotein	BioVoc
+CUI-less	COVID	BV_11	glycoproteins	glycoprotein	BioVoc
+CUI-less	COVID	BV_12	homotrimer	homotrimer	BioVoc
+CUI-less	COVID	BV_12	homotrimers	homotrimer	BioVoc
+CUI-less	COVID	BV_13	immunoblotting	immunoblotting	BioVoc
+CUI-less	COVID	BV_14	immunofluorescence test	immunofluorescence test	BioVoc
+CUI-less	COVID	BV_15	immunogenicity	immunogenicity	BioVoc
+CUI-less	COVID	BV_16	low-input metagenomic next-generation sequencing	low-input metagenomic next-generation sequencing	BioVoc
+CUI-less	COVID	BV_17	Major histocompatibility complex binding assays	Major histocompatibility complex binding assays	BioVoc
+CUI-less	COVID	BV_18	MHC binding assays	MHC binding assays	BioVoc
+CUI-less	COVID	BV_19	pathogenicity	pathogenicity	BioVoc
+CUI-less	COVID	BV_20	protein expression	protein expression	BioVoc
+CUI-less	COVID	BV_21	RNA analysis	RNA analysis	BioVoc
+CUI-less	COVID	BV_22	RNA virus	RNA virus	BioVoc
+CUI-less	COVID	BV_23	T-cell assays	T-cell assays	BioVoc
+CUI-less	COVID	BV_24	T-cell epitopes	T-cell epitopes	BioVoc
+CUI-less	COVID	BV_25	transfection	transfection	BioVoc
+CUI-less	COVID	BV_25	transfections	transfection	BioVoc
+CUI-less	COVID	BV_26	vaccine design	vaccine design	BioVoc
+CUI-less	COVID	BV_27	Western-Blot	Western-Blot	BioVoc
+CUI-less	COVID	BV_27	Western-blotting	Western-Blot	BioVoc
+CUI-less	COVID	BV_27	WB	Western-Blot	BioVoc
+CUI-less	COVID	CL_1	Caco-2	Caco-2	cell_line
+CUI-less	COVID	CL_2	Calu-3	Calu-3	cell_line
+CUI-less	COVID	CL_3	Calu-3 2B4	Calu-3 2B4	cell_line
+CUI-less	COVID	CL_4	HEK293T	HEK293T	cell_line
+CUI-less	COVID	CL_4	293T	HEK293T	cell_line
+CUI-less	COVID	CL_5	Huh-7	Huh-7	cell_line
+CUI-less	COVID	CL_6	Vero	Vero	cell_line
+CUI-less	COVID	CL_7	VeroE6	VeroE6	cell_line
+CUI-less	COVID	CL_7	Vero C1008	VeroE6	cell_line
+CUI-less	COVID	CL_8	VeroE6/TMPRSS2	VeroE6/TMPRSS2	cell_line
+CUI-less	COVID	CL_9	CHO-K1	CHO-K1	cell_line
+CUI-less	COVID	CL_10	K-562	K-562	cell_line
+CUI-less	COVID	CL_11	PER.C6	PER.C6	cell_line
+CUI-less	COVID	CL_12	47D11	47D11	cell_line
+CUI-less	COVID	CL_13	F26G1	F26G1	cell_line
+CUI-less	COVID	CL_14	F26G6	F26G6	cell_line
+CUI-less	COVID	CL_15	F26G8	F26G8	cell_line
+CUI-less	COVID	CL_16	F26G18	F26G18	cell_line
+CUI-less	COVID	CL_17	F26G19	F26G19	cell_line
+CUI-less	COVID	CL_18	N-176-15	N-176-15	cell_line
+CUI-less	COVID	CL_19	S-9-11	S-9-11	cell_line
+CUI-less	COVID	CL_20	rSN-18	rSN-18	cell_line
+CUI-less	COVID	CL_21	rSN-21-2	rSN-21-2	cell_line
+CUI-less	COVID	CL_22	rSN-29	rSN-29	cell_line
+CUI-less	COVID	CL_23	rSN-122	rSN-122	cell_line
+CUI-less	COVID	CL_24	rSN-150	rSN-150	cell_line
+CUI-less	COVID	SP_1	pangolin	pangolin	organism
+CUI-less	COVID	SP_1	pangolins	pangolin	organism
+CUI-less	COVID	SP_2	Rhinolophus macrotis	Rhinolophus macrotis	organism
+CUI-less	COVID	SP_2	bat	Rhinolophus macrotis	organism
+CUI-less	COVID	SP_2	bats	Rhinolophus macrotis	organism
+CUI-less	COVID	SP_2	Horseshoe bats	Rhinolophus macrotis	organism
+CUI-less	COVID	SP_2	Rhinolophus	Rhinolophus macrotis	organism
+CUI-less	COVID	SP_2	Big-eared horseshoe bat	Rhinolophus macrotis	organism
+CUI-less	COVID	SP_3	camel	camel	organism
+CUI-less	COVID	SP_3	dromedary	camel	organism
+CUI-less	COVID	SP_4	dog	dog	organism
+CUI-less	COVID	SP_4	canis lupus	dog	organism
+CUI-less	COVID	SP_5	Paguma larvata	Paguma larvata	organism
+CUI-less	COVID	SP_5	Palm civet	Paguma larvata	organism
+CUI-less	COVID	SP_5	Paradoxurus hermaphroditus	Paguma larvata	organism
+CUI-less	COVID	SP_5	palm civets	Paguma larvata	organism
+CUI-less	COVID	SP_5	Masked palm civet	Paguma larvata	organism
+CUI-less	COVID	SP_6	Homo sapiens	Homo sapiens	organism
+CUI-less	COVID	SP_6	Human	Homo sapiens	organism
+CUI-less	COVID	SP_7	COVID-19	COVID-19	organism
+CUI-less	COVID	SP_7	Severe Acute Respiratory Syndrome Coronavirus 2	COVID-19	organism
+CUI-less	COVID	SP_7	SARS-CoV-2	COVID-19	organism
+CUI-less	COVID	SP_7	2019-nCoV	COVID-19	organism
+CUI-less	COVID	SP_8	Betacoronavirus	Betacoronavirus	organism
+CUI-less	COVID	SP_9	Middle East respiratory syndrome coronavirus	Middle East respiratory syndrome coronavirus	organism
+CUI-less	COVID	SP_9	MERS-CoV	Middle East respiratory syndrome coronavirus	organism
+CUI-less	COVID	SP_9	MERS	Middle East respiratory syndrome coronavirus	organism
+CUI-less	COVID	SP_10	Severe Acute Respiratory Syndrome coronavirus	Severe Acute Respiratory Syndrome coronavirus	organism
+CUI-less	COVID	SP_10	SARS-CoV	Severe Acute Respiratory Syndrome coronavirus	organism
+CUI-less	COVID	SP_10	SARS	Severe Acute Respiratory Syndrome coronavirus	organism
+CUI-less	COVID	SP_10	severe acute respiratory distress syndrome	Severe Acute Respiratory Syndrome coronavirus	organism
+CUI-less	COVID	SP_11	HKU23	HKU23	organism
+CUI-less	COVID	PG_1	Spike glycoprotein	P59594	gene/protein
+CUI-less	COVID	PG_1	S protein	P59594	gene/protein
+CUI-less	COVID	PG_1	Spike glycoprotein	P59594	gene/protein
+CUI-less	COVID	PG_1	Peplomer protein	P59594	gene/protein
+CUI-less	COVID	PG_1	E2	P59594	gene/protein
+CUI-less	COVID	PG_2	Envelope small membrane protein	P59637	gene/protein
+CUI-less	COVID	PG_2	E protein	P59637	gene/protein
+CUI-less	COVID	PG_2	small enveloppe protein	P59637	gene/protein
+CUI-less	COVID	PG_2	sM protein	P59637	gene/protein
+CUI-less	COVID	PG_3	matrix protein		gene/protein
+CUI-less	COVID	PG_3	M protein		gene/protein
+CUI-less	COVID	PG_4	Nucleoprotein	P59595	gene/protein
+CUI-less	COVID	PG_4	N protein	P59595	gene/protein
+CUI-less	COVID	PG_4	nucleocapsid protein	P59595	gene/protein
+CUI-less	COVID	PG_6	CLEC4M	Q9H2X3	gene/protein
+CUI-less	COVID	PG_6	C-type lectin domain family 4 member M	Q9H2X3	gene/protein
+CUI-less	COVID	PG_7	DPP4		gene/protein
+CUI-less	COVID	PG_7	CD26		gene/protein
+CUI-less	COVID	PG_8	Transmembrane protease serine 2	O15393	gene/protein
+CUI-less	COVID	PG_8	Serine protease 10	O15393	gene/protein
+CUI-less	COVID	PG_9	SARS-S		gene/protein
+CUI-less	COVID	PG_10	Angiotensin-converting enzyme 2	Q9BYF1	gene/protein
+CUI-less	COVID	PG_10	hACE2	Q9BYF1	gene/protein
+CUI-less	COVID	PG_10	human ACE2	Q9BYF1	gene/protein
+CUI-less	COVID	PG_10	ACE2	Q9BYF1	gene/protein
+CUI-less	COVID	PG_10	human Angiotensin-converting enzyme 2	Q9BYF1	gene/protein
+CUI-less	COVID	PG_10	ACE-related carboxypeptidas	Q9BYF1	gene/protein
+CUI-less	COVID	PG_10	ACEH	Q9BYF1	gene/protein
+CUI-less	COVID	PG_11	SARS-CoV-2 RBD		gene/protein
+CUI-less	COVID	PG_12	Replicase polyprotein 1ab	P0C6X7	gene/protein
+CUI-less	COVID	PG_13	Replicase polyprotein 1a	P0C6U8	gene/protein
+CUI-less	COVID	PG_14	Protein 3a	P59632	gene/protein
+CUI-less	COVID	PG_14	Protein U274	P59632	gene/protein
+CUI-less	COVID	PG_14	Protein X1	P59632	gene/protein
+CUI-less	COVID	PG_15	Replicase polyprotein 1ab	P0C6V9	gene/protein
+CUI-less	COVID	PG_15	pp1ab	P0C6V9	gene/protein
+CUI-less	COVID	PG_16	Replicase polyprotein 1a	P0C6F5	gene/protein
+CUI-less	COVID	PG_16	pp1a	P0C6F5	gene/protein
+CUI-less	COVID	PG_17	Protein 7a	P59635	gene/protein
+CUI-less	COVID	PG_17	Accessory protein 7a	P59635	gene/protein
+CUI-less	COVID	PG_17	Protein U122	P59635	gene/protein
+CUI-less	COVID	PG_17	Protein X4	P59635	gene/protein
+CUI-less	COVID	PG_18	Spike glycoprotein	Q0Q475	gene/protein
+CUI-less	COVID	PG_18	S glycoprotein	Q0Q475	gene/protein
+CUI-less	COVID	G_1	CLEC4M		gene/protein
+CUI-less	COVID	G_1	CD209L		gene/protein
+CUI-less	COVID	G_2	TMPRSS2		gene/protein
+CUI-less	COVID	G_2	PRSS10		gene/protein
+CUI-less	COVID	G_3	ACE2		gene/protein
+CUI-less	COVID	DG_1	Adalimumab	Adalimumab	clinical_drug
+CUI-less	COVID	DG_2	Amprenavir	Amprenavir	clinical_drug
+CUI-less	COVID	DG_3	Atazanavir	Atazanavir	clinical_drug
+CUI-less	COVID	DG_3	Reyataz	Atazanavir	clinical_drug
+CUI-less	COVID	DG_3	Atavir	Atazanavir	clinical_drug
+CUI-less	COVID	DG_3	ATZ	Atazanavir	clinical_drug
+CUI-less	COVID	DG_4	Atovaquone	Atovaquone	clinical_drug
+CUI-less	COVID	DG_5	Aviptadil	Aviptadil	clinical_drug
+CUI-less	COVID	DG_5	RLF-100	Aviptadil	clinical_drug
+CUI-less	COVID	DG_6	Azithromycin	Azithromycin	clinical_drug
+CUI-less	COVID	DG_6	AzaSite	Azithromycin	clinical_drug
+CUI-less	COVID	DG_7	Bepotastine	Bepotastine	clinical_drug
+CUI-less	COVID	DG_7	Bepreve	Bepotastine	clinical_drug
+CUI-less	COVID	DG_8	Cefditoren	Cefditoren	clinical_drug
+CUI-less	COVID	DG_8	Spectracef	Cefditoren	clinical_drug
+CUI-less	COVID	DG_9	Cefixime	Cefixime	clinical_drug
+CUI-less	COVID	DG_9	Suprax	Cefixime	clinical_drug
+CUI-less	COVID	DG_10	Chloroquine	Chloroquine	clinical_drug
+CUI-less	COVID	DG_11	Clarithromycin	Clarithromycin	clinical_drug
+CUI-less	COVID	DG_11	6-O-methyl erythromycin	Clarithromycin	clinical_drug
+CUI-less	COVID	DG_11	Biaxin	Clarithromycin	clinical_drug
+CUI-less	COVID	DG_12	Danoprevir	Danoprevir	clinical_drug
+CUI-less	COVID	DG_12	Ganovo	Danoprevir	clinical_drug
+CUI-less	COVID	DG_13	Darunavir	Darunavir	clinical_drug
+CUI-less	COVID	DG_13	Prezista	Darunavir	clinical_drug
+CUI-less	COVID	DG_14	Daunorubicin	Daunorubicin	clinical_drug
+CUI-less	COVID	DG_14	Cerubidine	Daunorubicin	clinical_drug
+CUI-less	COVID	DG_15	Eculizumab	Eculizumab	clinical_drug
+CUI-less	COVID	DG_15	Soliris	Eculizumab	clinical_drug
+CUI-less	COVID	DG_16	Erythromycin	Erythromycin	clinical_drug
+CUI-less	COVID	DG_16	Abomacetin	Erythromycin	clinical_drug
+CUI-less	COVID	DG_16	Ilosone	Erythromycin	clinical_drug
+CUI-less	COVID	DG_17	Favipiravir	Favipiravir	clinical_drug
+CUI-less	COVID	DG_17	Avigan	Favipiravir	clinical_drug
+CUI-less	COVID	DG_17	T-705	Favipiravir	clinical_drug
+CUI-less	COVID	DG_18	Fosamprenavir	Fosamprenavir	clinical_drug
+CUI-less	COVID	DG_18	FOS-APV	Fosamprenavir	clinical_drug
+CUI-less	COVID	DG_19	Galidesivir	Galidesivir	clinical_drug
+CUI-less	COVID	DG_19	Immucillin A	Galidesivir	clinical_drug
+CUI-less	COVID	DG_20	Hydroxychloroquine	Hydroxychloroquine	clinical_drug
+CUI-less	COVID	DG_20	Oxichloroquine	Hydroxychloroquine	clinical_drug
+CUI-less	COVID	DG_20	Oxichlorochine	Hydroxychloroquine	clinical_drug
+CUI-less	COVID	DG_20	Plaquenil	Hydroxychloroquine	clinical_drug
+CUI-less	COVID	DG_20	Dolquine	Hydroxychloroquine	clinical_drug
+CUI-less	COVID	DG_20	HCQS	Hydroxychloroquine	clinical_drug
+CUI-less	COVID	DG_20	Quensyl	Hydroxychloroquine	clinical_drug
+CUI-less	COVID	DG_20	Polirreumin	Hydroxychloroquine	clinical_drug
+CUI-less	COVID	DG_21	Indinavir	Indinavir	clinical_drug
+CUI-less	COVID	DG_21	Crixivan	Indinavir	clinical_drug
+CUI-less	COVID	DG_22	Interferon alfacon-1	Interferon alfacon-1	clinical_drug
+CUI-less	COVID	DG_22	IFN Alfacon-1	Interferon alfacon-1	clinical_drug
+CUI-less	COVID	DG_22	IFN-Con1	Interferon alfacon-1	clinical_drug
+CUI-less	COVID	DG_22	Infergen	Interferon alfacon-1	clinical_drug
+CUI-less	COVID	DG_23	Lopinavir	Lopinavir	clinical_drug
+CUI-less	COVID	DG_23	Kaletra	Lopinavir	clinical_drug
+CUI-less	COVID	DG_24	Metamizole	Metamizole	clinical_drug
+CUI-less	COVID	DG_24	Algocalmin	Metamizole	clinical_drug
+CUI-less	COVID	DG_24	Algozone	Metamizole	clinical_drug
+CUI-less	COVID	DG_24	Analgin	Metamizole	clinical_drug
+CUI-less	COVID	DG_24	Dimethone	Metamizole	clinical_drug
+CUI-less	COVID	DG_24	Dipirona	Metamizole	clinical_drug
+CUI-less	COVID	DG_24	Neo-Melubrina	Metamizole	clinical_drug
+CUI-less	COVID	DG_24	Novalgin	Metamizole	clinical_drug
+CUI-less	COVID	DG_24	Optalgin	Metamizole	clinical_drug
+CUI-less	COVID	DG_24	Protemp	Metamizole	clinical_drug
+CUI-less	COVID	DG_24	Pyralgin	Metamizole	clinical_drug
+CUI-less	COVID	DG_25	Mitoxantrone	Mitoxantrone	clinical_drug
+CUI-less	COVID	DG_25	Novantrone	Mitoxantrone	clinical_drug
+CUI-less	COVID	DG_26	Moexipril	Moexipril	clinical_drug
+CUI-less	COVID	DG_26	Univasc	Moexipril	clinical_drug
+CUI-less	COVID	DG_27	Nelfinavir	Nelfinavir	clinical_drug
+CUI-less	COVID	DG_27	Viracept	Nelfinavir	clinical_drug
+CUI-less	COVID	DG_28	Remdesivir	Remdesivir	clinical_drug
+CUI-less	COVID	DG_28	GS-5734	Remdesivir	clinical_drug
+CUI-less	COVID	DG_29	Ribavirin	Ribavirin	clinical_drug
+CUI-less	COVID	DG_30	Ritonavir	Ritonavir	clinical_drug
+CUI-less	COVID	DG_30	Norvir	Ritonavir	clinical_drug
+CUI-less	COVID	DG_31	Rosuvastatin	Rosuvastatin	clinical_drug
+CUI-less	COVID	DG_31	Crestor	Rosuvastatin	clinical_drug
+CUI-less	COVID	DG_32	Saquinavir	Saquinavir	clinical_drug
+CUI-less	COVID	DG_32	Invirase	Saquinavir	clinical_drug
+CUI-less	COVID	DG_33	Sofosbuvir	Sofosbuvir	clinical_drug
+CUI-less	COVID	DG_33	Sovaldi	Sofosbuvir	clinical_drug
+CUI-less	COVID	DG_34	Tipranavir	Tipranavir	clinical_drug
+CUI-less	COVID	DG_34	Aptivus	Tipranavir	clinical_drug
+CUI-less	COVID	DG_35	Tocilizumab	Tocilizumab	clinical_drug
+CUI-less	COVID	DG_35	Actemra	Tocilizumab	clinical_drug
+CUI-less	COVID	DG_35	Atlizumab	Tocilizumab	clinical_drug
+CUI-less	COVID	DG_36	Methylprednisolone	Methylprednisolone	clinical_drug
+CUI-less	COVID	DG_37	Angiotensin II	Angiotensin II	clinical_drug
+CUI-less	COVID	DG_38	Sildenafil	Sildenafil	clinical_drug
+CUI-less	COVID	DG_39	Sarilumab	Sarilumab	clinical_drug
+CUI-less	COVID	DG_40	Cobicistat	Cobicistat	clinical_drug
+CUI-less	COVID	DG_40	Tybost	Cobicistat	clinical_drug
+CUI-less	COVID	DG_41	Baricitinib	Baricitinib	clinical_drug
+CUI-less	COVID	DG_41	Olumiant	Baricitinib	clinical_drug
+CUI-less	COVID	DG_42	PUL-042 Inhalation Solution	PUL-042 Inhalation Solution	clinical_drug
+CUI-less	COVID	DG_43	Thalidomide	Thalidomide	clinical_drug
+CUI-less	COVID	DG_43	Thalomid	Thalidomide	clinical_drug
+CUI-less	COVID	DG_44	NestCell®	NestCell®	clinical_drug
+CUI-less	COVID	DG_45	Fingolimod	Fingolimod	clinical_drug
+CUI-less	COVID	DG_45	Gilenya	Fingolimod	clinical_drug
+CUI-less	COVID	DG_45	Gilenia	Fingolimod	clinical_drug
+CUI-less	COVID	DG_46	CD24Fc	CD24Fc	clinical_drug
+CUI-less	COVID	DG_47	MSCs	MSCs	clinical_drug
+CUI-less	COVID	DG_48	UC-MSCs	UC-MSCs	clinical_drug
+CUI-less	COVID	DG_49	Umifenovir	Umifenovir	clinical_drug
+CUI-less	COVID	DG_49	Arbidol	Umifenovir	clinical_drug
+CUI-less	COVID	DG_49	Arbidole	Umifenovir	clinical_drug

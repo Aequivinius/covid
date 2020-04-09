@@ -5,6 +5,7 @@
 __*
 *.pyc
 Pipfile*
+*.swp
 
 data
 
