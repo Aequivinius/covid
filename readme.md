@@ -1,36 +1,34 @@
 # OGER / BioBERT / PubAnnotation
 
-All the outputs of this work go [here](https://pub.cl.uzh.ch/projects/COVID19/).
+All the outputs of this work go [here](https://pub.cl.uzh.ch/projects/COVID19/). This documentation only provides a superficial view on how the different scripts are called and how they depend on each other, for more precise calls see `run_all.sh`.
 
 ### 1.1 General Pipeline
 
-1. A little  script downloads the most recent PMIDs included in the LitCovid dataset and creates the necessary `data` directories. The whole dataset is then annotated for 10 different vocabularies:
+1. A little  script downloads the most recent PMIDs included in the LitCovid dataset and creates the necessary `data` directories. The whole dataset is then annotated for the 10 different CRAFT vocabularies:
 
 ```
 CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
 ```
 
-2. OGER is first called: It downloads the articles and annotates them. For every vocabulary, it generates one big `VOCABULARY.conll` file containing all the articles and annotations in `data/oger/`. 
+2. OGER is first called: It downloads the articles and annotates them. For every vocabulary, it generates one big `data/oger/$VOCABULARY.conll` file containing all the articles and annotations.
 3. BioBert preprocessed the articles, and then predicts spans and ids for each of the vocabularies (into `data/biobert/CHEBI-ids.labels` etc.)
 4. The outputs of OGER and BB are harmonised using `harmonise.py`, split into individual articles and converted to `.json`. For every vocabulary, a `.tgz`-archive containing those `.json` files is produced (`data/harmonised_json/CHEBI.tgz`).
 5. An additional merge step joins the 10 different vocabulary files, and searches the document again using a covid-specific, manually crafted dictionary (`oger/merge/covid19.tsv`)
-6. The archives can be manually uploaded to PubAnnotation.
+6. The archives can be manually uploaded to PubAnnotation. Various export formats are then generated and placed in the respective directories so that they can be downloaded by the public [here](https://pub.cl.uzh.ch/projects/COVID19/).
 
 ### 1.2 `data` directory
 
 ```
 data
 |--- ids # list of ids to download
-|--- oger (_pmc)
-     |--- CL.conll # most recent OGER annotations
+|--- oger (_pmc) # OGER annotations
      |--- CHEBI.conll
      |--- ...
 |--- biobert (_pmc)
      |--- CHEBI-ids.labels
      |--- CHEBI-spans.labels
      |--- ...
-|--- biobert_tokens.tf_record # preprocessing material
-|--- biobert_tokens_pmc.tf_record
+|--- biobert(_pmc).tf_record / .tokens # preprocessing
 |--- harmonised_conll (_pmc)
      |--- CL.conll
      |--- CHEBI.conll
@@ -47,33 +45,23 @@ data
 ### 2.1 Obtaining PMIDs
 
 ```bash
-python -c 'import covid; covid.conll_collection_to_jsons()'
+python -c 'import covid; covid.get_pmids()'
 ```
 
 ### 2.2 OGER
 
 * adapt the `config/common.ini`file (or use the one here); especially set `conll_include = docid offsets`. Like this, the resulting `.conll` file will prefix every individual article with `#doc_id = 123456789`, which allows us later on to split the articles again so they can be uploaded to PubAnnotation.
 * also, I remember that in one of the `config` files there was a small error, but I don't recall which one.
+* on our default development server, this takes about 50s per vocabulary.
 
 ```bash
 # pwd = oger
-for v in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
+for value in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
 do
-echo 'Running OGER for' $v
-mkdir ../data/oger/$v/
-oger run -s config/common.ini config/$v.ini -o ../data/oger/$v/
-done
+oger run -s config/common.ini config/$value.ini -o ../data/oger/$value
 ```
 
-```bash
-# copy the files for easier navigation
-# pwd = data
-for v in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
-do
-collection=$(ls -t oger/$v/*.conll | head -n1)
-cp $collection oger/$v.conll
-done
-```
+* Right now, this fails for NCBITaxon for some `lxml` library error.
 
 ### 2.3 BioBert
 
@@ -83,23 +71,8 @@ done
 python3 biobert_predict.py \
 --do_preprocess=true \
 --input_text=../data/oger/CL.conll \
---tf_record=../data/biobert_tokens.tf_record \
+--tf_record=../data/biobert.tf_record \
 --vocab_file=common/vocab.txt
-```
-
-* The following commands take quite some time to execute (but don't need GPUs). The models have different suffixes as described here:
-
-```
-["CHEBI"]=52715 
-["CL"]=52714 
-["GO_BP"]=52715 
-["GO_CC"]=52712 
-["GO_MF"]=52710 
-["MOP"]=52710 
-["NCBITaxon"]=52710 
-["PR"]=52720 
-["SO"]=52714 
-["UBERON"]=52717
 ```
 
 * Since the individual calls take quite some time this loop serves as a demonstration of what commands to run, but I wouldn't recommend running it as follows. The models of BB unfortunately have inconsistent suffixes.
@@ -116,11 +89,9 @@ do
 echo "BB for" $v-$s
 mkdir ../data/biobert/$v-$s
 
-mkdir ../data/biobert/$v-$s
-
 python3 biobert_predict.py \
 	--do_predict=true \
-	--tf_record=../data/biobert_tokens.tf_record \
+	--tf_record=../data/biobert.tf_record \
 	--bert_config_file=common/bert_config.json \
 	--init_checkpoint=models/$v-$s/model.ckpt-${vocabularies[$v]} \
 	--data_dir=models/$v-$s \
@@ -130,6 +101,8 @@ python3 biobert_predict.py \
 done
 done 
 ```
+
+* On our server there are also 4 scripts called `run_$SERVER.sh`, which are not uploaded to git. These can be called to run a bunch of screen processes according to the server's capacity.
 
 ### 2.4 `harmonise.py`
 

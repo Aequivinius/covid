@@ -2,55 +2,45 @@
 
 home=$(pwd)
 
-echo '0: Creating directories'
+echo '0: Creating directories, backing up old data'
+mv data data.$(date +'%d%m%Y')
 mkdir data data/ids/ data/oger/ data/biobert/ data/harmonised_conll/
 
 echo '1: Downloading PMIDs'
 python -c 'import covid; covid.get_pmids()'
 
-cd home/oger
-for value in CL
+# 2: RUNNING OGER
+cd $home/oger
+
+for value in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
 do
 echo '2: Running OGER for' $value
-oger run -s config/common.ini config/$value.ini -o ../data/oger/$value.conll
+time oger run -s config/common.ini config/$value.ini -o ../data/oger/$value
+echo ''
+
+# data housekeeping
 collection=$(ls -t ../data/oger/$value/*.conll | head -n1)
 cp $collection ../data/oger/$value.conll
+rm -r ../data/oger/$value
 done
 
-cd home/bert
-echo '3: Preprocessing for BB'
-python3 biobert_predict.py \
+# 3: RUNNING BIOBERT
+cd $home/biobert
+echo '3.1: Preprocessing for BB'
+time python3 biobert_predict.py \
 --do_preprocess=true \
---input_text=../data/oger_collection/CL.conll \
---tf_record=../data/biobert_collection_tokens/collection.tf_record \
+--input_text=../data/oger/CL.conll \
+--tf_record=../data/biobert.tf_record \
 --vocab_file=common/vocab.txt
 
-declare -A vocabularies=( [CHEBI]=52715 [CL]=52714 [GO_BP]=52715 [GO_CC]=52712 [GO_MF]=52710 [MOP]=52710 [NCBITaxon]=52710 [PR]=52720 [SO]=52714 [UBERON]=52717 )
-
-for v in "${!vocabularies[@]}"
+# refer to the readme.md for more information
+for $SERVER in 1 2 3 ...
 do
-
-for s in ids spans
-do
-
-echo '3: BB for' $v-$s
-mkdir ../data/biobert/$v-$s
-
-mkdir ../data/biobert/$v-$s
-
-python3 biobert_predict.py \
-	--do_predict=true \
-	--tf_record=../data/biobert_tokens.tf_record \
-	--bert_config_file=common/bert_config.json \
-	--init_checkpoint=models/$v-$s/model.ckpt-${vocabularies[${v}]} \
-	--data_dir=models/$v-$s \
-	--output_dir=../data/biobert/$v-$s \
-	--configuration=$s
-
+ssh $SERVER 'bash -s' < run_bb_$SERVER.sh
 done
-done 
 
-cd home
+# 4: HARMONISING
+cd $home
 unset vocabularies
 declare -A vocabularies=( [CHEBI]=spans-first [CL]=spans-first [GO_BP]=spans-first [GO_CC]=spans-first [GO_MF]=spans-first [MOP]=spans-first [NCBITaxon]=ids-first [PR]=spans-only [SO]=spans-first [UBERON]=spans-first )
 

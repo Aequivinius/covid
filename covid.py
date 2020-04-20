@@ -8,14 +8,26 @@ from oger.ctrl.router import Router, PipelineServer
 VOCABULARY = "CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON"
 VOCABULARIES = VOCABULARY.split()
 
-def get_pmids():
-    url = 'https://www.ncbi.nlm.nih.gov/research/coronavirus-api/export?'
-    urllib.request.urlretrieve(url, 'data/ids/pmids.tsv')
-    dataf = pd.read_csv('data/ids/pmids.tsv', sep='\t', comment='#')
-    dataf = dataf['pmid'][~dataf['pmid'].isin(['32150360',
-                                               '32104909',
-                                               '32090470'])]
-    dataf.to_csv('data/pmids.txt', sep=' ', index=False, header=False)
+PMID_URL = 'https://www.ncbi.nlm.nih.gov/research/coronavirus-api/export?'
+BAD_PMIDS = ['32150360', 
+             '32104909', 
+             '32090470',
+             '32296195',
+             '32269354',
+             '32238946',
+             '32214268',
+             '32188956',
+             '32161394',
+             '32076224']
+
+def get_pmids(outpath='data/ids/'):
+    tsv_output = os.path.join(outpath, 'pmids.tsv')
+    txt_output = os.path.join(outpath, 'pmids.txt')
+
+    urllib.request.urlretrieve(PMID_URL, tsv_output)
+    dataf = pd.read_csv(tsv_output, sep='\t', comment='#')
+    dataf = dataf['pmid'][~dataf['pmid'].isin(BAD_PMIDS)]
+    dataf.to_csv(txt_output, sep=' ', index=False, header=False)
 
 def pmctsv_to_txt(inpath):
     dataf = pd.read_csv(inpath,header=0,delimiter='\t')
