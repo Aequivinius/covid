@@ -1,5 +1,7 @@
 # OGER / BioBERT / PubAnnotation
 
+All the outputs of this work go [here](https://pub.cl.uzh.ch/projects/COVID19/).
+
 ### 1.1 General Pipeline
 
 1. A little  script downloads the most recent PMIDs included in the LitCovid dataset and creates the necessary `data` directories. The whole dataset is then annotated for 10 different vocabularies:
@@ -38,7 +40,8 @@ data
           |--- 123456789.json
           |--- ...
      |--- CL.tgz
-     |--- ... 
+     |--- ...
+|--- public # data that goes to be downloaded 
 ```
 
 ### 2.1 Obtaining PMIDs
