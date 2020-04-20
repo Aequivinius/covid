@@ -56,3 +56,15 @@ def conll_collection_to_jsons(inpath, outpath):
             g.truncate(0)
             g.seek(0)
             json.dump(good_json, g)
+            
+def conll_collection_to_txts(inpath, outpath):
+    pl = PipelineServer(Router())
+    collection = pl.load_one(inpath, 'conll',pubanno_meta='{"sourcedb":"pmc"}')
+    for document in collection:
+        pmid = document.id_
+        if not os.path.exists(outpath):
+            os.makedirs(outpath)
+
+        outfile = os.path.join(outpath, pmid + '.txt')
+        with open(outfile, 'w', encoding='utf8') as g:
+            pl.write(document, 'txt', g)
