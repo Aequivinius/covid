@@ -143,7 +143,13 @@ do
 python harmonise.py -t data/harmonised_conll/$v.conll -o data/oger/$v.conll -b data/biobert_tokens/collection.tokens -i data/biobert/$v-ids.labels -s data/biobert/$v-spans.labels -m ${vocabularies[$v]}
 ```
 ### 2.5 merging
-`oger run -s oger-settings-all.ini`
+
+* in `oger-settings-all.ini` , look at ` export_format = bioc_json` and add necessary output formats.
+
+```bash
+cd oger
+oger run -s oger-settings-all.ini
+```
 
 ### 2.6 Upload to PubAnnotation
 
