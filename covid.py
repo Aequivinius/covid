@@ -64,8 +64,8 @@ def conll_collection_to_jsons(inpath='data/merged/collection.conll',
             g.truncate(0)
             g.seek(0)
             json.dump(good_json, g)
-   
-            
+
+
 def conll_collection_to_txts(inpath='data/merged/collection.conll',
                              outpath='data/public/txt'):
     pl = PipelineServer(Router())
