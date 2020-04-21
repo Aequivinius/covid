@@ -78,3 +78,11 @@ def conll_collection_to_txts(inpath='data/merged/collection.conll',
         outfile = os.path.join(outpath, pmid + '.txt')
         with open(outfile, 'w', encoding='utf8') as g:
             pl.write(document, 'txt', g)
+
+
+def bioc_to_brat(inpath='data/merged/collection.bioc.json',
+                 outpath='data/merged/brat'):
+    pl = PipelineServer()
+    coll = pl.load_one(inpath, "bioc_json")
+    for doc in coll:
+        pl.export(doc, output_directory=outpath, export_format='brat')

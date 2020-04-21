@@ -4,7 +4,7 @@ home=$(pwd)
 
 echo '0: Creating directories, backing up old data'
 mv data data.$(date +'%d%m%Y')
-mkdir data data/ids/ data/oger/ data/biobert/ data/harmonised/ data/pubannotation data/public
+mkdir data data/ids/ data/oger/ data/biobert/ data/harmonised/ data/pubannotation/ data/merged data/merged/brat/ data/public/
 
 echo '1: Downloading PMIDs'
 python -c 'import covid; covid.get_pmids()'
@@ -66,11 +66,15 @@ done
 echo '5: Merging'
 cd $home/oger
 cp ../data/harmonised/CHEBI.conll collection.conll
+
 oger run -s oger-settings-all.ini
 mv ../data/merged/collection.json ../data/merged/collection.bioc.json
-mv ../data/merged/collection.zip ../data/merged/collection.europmc.zip
+
 oger run -s oger-settings-pubannotation.ini
 mv ../data/merged/collection.json ../data/merged/collection.pubannotation.json
+
+# oger run -s oger-settings-eupmc.ini
+# mv ../data/merged/collection.zip ../data/merged/collection.europmc.zip
 
 # 6: DISTRIBUTION
 echo '6: Splitting, .tgz-ing and moving to DL directories'
@@ -86,6 +90,10 @@ tar -czvf data/public/litcovid19.tsv.tgz data/public/litcovid19.tsv
 
 python -c 'import covid; covid.conll_collection_to_txts()'
 tar -czvf data/public/litcovid19.txt.tgz data/public/txt
+
+python -c 'import covid; covid.bioc_to_brat()'
+mv /mnt/shared/apaches/transfer/brat/brat_ontogene/data/LitCovid /mnt/shared/apaches/transfer/brat/brat_ontogene/data/LitCovid.$(date +'%d%m%Y')
+cp data/merged/brat/* /mnt/shared/apaches/transfer/brat/brat_ontogene/data/LitCovid
 
 mv /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid.$(date +'%d%m%Y')
 cp data/public/* /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid/
