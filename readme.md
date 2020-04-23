@@ -16,11 +16,6 @@ CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
 5. An additional merge step joins the 10 different vocabulary files, and searches the document again using a covid-specific, manually crafted dictionary (`oger/merge/covid19.tsv`)
 6. Finally, the outputs are distributed to [PubAnnotation](http://pubannotation.org/projects/LitCovid-OGER-BB), EuroPMC, [brat](https://pub.cl.uzh.ch/projects/ontogene/brat/#/LitCovid/) and for download on the [project website](https://pub.cl.uzh.ch/projects/COVID19/) (BioC, TSV, TXT)
 
-
-
-2. The archives can be manually uploaded to PubAnnotation. Various export formats are then generated and placed in the respective directories so that they can be downloaded by the public [here](https://pub.cl.uzh.ch/projects/COVID19/).
-3. split into individual articles and converted to `.json`. For every vocabulary, a `.tgz`-archive containing those `.json` files is produced (`data/harmonised_json/CHEBI.tgz`).
-
 ### 1.2 `data` directory
 
 ```

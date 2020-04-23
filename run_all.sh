@@ -29,7 +29,7 @@ cd $home/biobert
 echo '3.1: Preprocessing for BB'
 time python3 biobert_predict.py \
 --do_preprocess=true \
---input_text=../data/oger/CL.conll \
+--input_text=../data/oger/CHEBI.conll \
 --tf_record=../data/biobert.tf_record \
 --vocab_file=common/vocab.txt
 
