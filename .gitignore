@@ -7,7 +7,7 @@ __*
 Pipfile*
 *.swp
 
-data
+data*
 run_bb_*.sh
 biobert
 oger
