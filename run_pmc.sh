@@ -59,7 +59,7 @@ do
 for s in ids spans
 do
 echo $v-$s
-mv $v-$s/biobert_tokens_pmc.labels $v-$s.labels
+mv $v-$s/biobert_tokens.labels $v-$s.labels
 rm -r $v-$s
 done
 done
