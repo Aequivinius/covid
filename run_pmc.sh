@@ -2,24 +2,10 @@
 
 home=$(pwd)
 
-echo '0: Creating directories'
-mkdir data data/ids data/pmids/ data/oger_pmc/ data/biobert_pmc/ data/harmonised_conll_pmc/
-
 echo '0: Creating directories, backing up old data'
 mv data data.$(date +'%d%m%Y')
-mkdir data data/oger_pmc/ data/biobert_pmc/ data/harmonised_pmc/ data/pubannotation_pmc/ data/merged_pmc data/merged_pmc/brat/ data/public/
+mkdir data data/ids data/oger_pmc/ data/biobert_pmc/ data/harmonised_pmc/ data/pubannotation_pmc/ data/merged_pmc data/merged_pmc/brat/ data/public/
 
-# echo '1: Downloading PMIDs'
-# python -c 'import covid; covid.pmctsv_to_txt()'
-# 
-# cd home/oger
-# for value in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
-# do
-#     echo '2: Running OGER for' $value
-#     oger run -v -s config/pmc.ini config/$value.ini -o ../data/oger_pmc/$value
-#     collection=$(ls -t ../data/oger_pmc/$value/*.conll | head -n1)
-#     cp $collection ../data/oger/$value.conll
-# done
 
 # 2: RUNNING OGER
 cd $home/oger
@@ -29,8 +15,11 @@ do
 echo '2: Running OGER for' $value
 time oger run -s config/common_pmc.ini config/$value.ini -o ../data/oger_pmc/$value
 echo ''
+done
 
 # 2: data housekeeping
+for value in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
+do
 collection=$(ls -t ../data/oger_pmc/$value/*.conll | head -n1)
 cp $collection ../data/oger_pmc/$value.conll
 rm -r ../data/oger_pmc/$value
@@ -46,13 +35,14 @@ time python3 biobert_predict.py \
 --vocab_file=common/vocab.txt
 
 # refer to the readme.md for more information
+# 1450
 cd $home
-for SERVER in 1 2 3 ...
+for SERVER in asbru gimli idavoll vigrid
 do
 ssh $SERVER 'bash -s' < run_bb_pmc_$SERVER.sh
 done
 
-cd home/data/biobert_pmc
+cd $home/data/biobert_pmc
 echo '3: Moving BB files'
 for v in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
 do
