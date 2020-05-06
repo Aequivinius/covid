@@ -34,7 +34,8 @@ time python3 biobert_predict.py \
 --vocab_file=common/vocab.txt
 
 # refer to the readme.md for more information
-for $SERVER in 1 2 3 ...
+cd $home
+for SERVER in 1 2 3 ...
 do
 ssh $SERVER 'bash -s' < run_bb_$SERVER.sh
 done
