@@ -138,5 +138,5 @@ python -c 'import covid; covid.conll_collection_to_jsons()'
 ```
 
 * The PA project is found [here](http://pubannotation.org/projects/LitCovid-OGER-BB). Before uploading the annotations, add the most recent documents by importing them from the LitCovid-docs project. Then upload the `pubannotation.tgz` file, chosing **replace**. Note that currently, this doesn't work when using Chrome browser.
-* For brat, files need to go  `/mnt/shared/apaches/transfer/brat/brat_ontogene/data`, but I'm not yet quite sure how to generate them.
+* For brat, files need to go  `/mnt/shared/apaches/transfer/brat/brat_ontogene/data`
 * BioC, TSV and TXT files generated and moved to the respective folders.
