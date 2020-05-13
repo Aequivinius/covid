@@ -12,6 +12,11 @@ python -c 'import covid; covid.get_pmids()'
 # 2: RUNNING OGER
 cd $home/oger
 
+# during this step, it tends to fail a few times at first:
+# OGER will whine about some articles not being available
+# add them to the covid.py, and run step 1 again until
+# OGER complains no more.
+
 for value in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
 do
 echo '2: Running OGER for' $value
@@ -42,6 +47,7 @@ done
 
 # 3: data house keeping
 cd $home
+cp -r data/biobert data/biobert.bkp
 for v in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
 do
 for s in spans ids
@@ -57,11 +63,13 @@ cd $home
 unset vocabularies
 declare -A vocabularies=( [CHEBI]=spans-first [CL]=spans-first [GO_BP]=spans-first [GO_CC]=spans-first [GO_MF]=spans-first [MOP]=spans-first [NCBITaxon]=ids-first [PR]=spans-only [SO]=spans-first [UBERON]=spans-first )
 
-for v in "${!vocabularies[@]}"
+#zsh style arrays
+for v k in ${(kv)vocabularies}
 do
 echo '4: Harmonising' $v
-python harmonise.py -t data/harmonised/$v.conll -o data/oger/$v.conll -b data/biobert.tokens -i data/biobert/$v-ids.labels -s data/biobert/$v-spans.labels -m ${vocabularies[$v]}
+python harmonise.py -t data/harmonised/$v.conll -o data/oger/$v.conll -b data/biobert.tokens -i data/biobert/$v-ids.labels -s data/biobert/$v-spans.labels -m $k
 done
+
 
 # 5: MERGING
 echo '5: Merging'
@@ -73,13 +81,20 @@ mv ../data/merged/collection.json ../data/merged/collection.bioc.json
 
 oger run -s oger-settings-pubannotation.ini
 mv ../data/merged/collection.json ../data/merged/collection.pubannotation.json
+mv ../data/merged/collection.tgz ../data/merged/collection.pubannotation.tgz
 
-# oger run -s oger-settings-eupmc.ini
-# mv ../data/merged/collection.zip ../data/merged/collection.europmc.zip
+oger run -s oger-settings-eupmc.ini
+mv merged-eupmc/collection.conll ../data/merged/collection.europmc.conll
+mv merged-eupmc/collection.json ../data/merged/collection.europmc.json
+mv merged-eupmc/collection.zip ../data/merged/collection.europmc.zip
+rm -r merged-eupmc
+
 
 # 6: DISTRIBUTION
 echo '6: Splitting, .tgz-ing and moving to DL directories'
 cd $home
+# this needs to be changed to utf-8, because otherwise it breaks
+# for some articles on PubAnnotation
 python -c 'import covid; covid.conll_collection_to_jsons()'
 tar -czvf data/pubannotation.tgz data/pubannotation/
 
@@ -94,7 +109,9 @@ tar -czvf data/public/litcovid19.txt.tgz data/public/txt
 
 python -c 'import covid; covid.bioc_to_brat()'
 mv /mnt/shared/apaches/transfer/brat/brat_ontogene/data/LitCovid /mnt/shared/apaches/transfer/brat/brat_ontogene/data/LitCovid.$(date +'%d%m%Y')
+mkdir /mnt/shared/apaches/transfer/brat/brat_ontogene/data/LitCovid
 cp data/merged/brat/* /mnt/shared/apaches/transfer/brat/brat_ontogene/data/LitCovid
 
 mv /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid.$(date +'%d%m%Y')
+mkdir /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid/
 cp data/public/* /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid/
