@@ -1,16 +1,18 @@
 # OGER / BioBERT / PubAnnotation
 
-All the outputs of this work go [here](https://pub.cl.uzh.ch/projects/COVID19/). This documentation only provides a superficial view on how the different scripts are called and how they depend on each other, for more precise calls see `run_all.sh`.
+All the outputs of this pipeline will finally be linked [here](https://pub.cl.uzh.ch/projects/COVID19/). This documentation only provides a superficial view on how the different scripts are called and how they depend on each other, for more precise instructions see `run_all.sh`.
 
 ### 1.1 General Pipeline
 
-1. A little  script downloads the most recent PMIDs included in the LitCovid dataset and creates the necessary `data` directories. The whole dataset is then annotated for the 10 different CRAFT vocabularies:
+The python scripts need some libraries that are listed in the `Pipfile`, make sure to start your `pipenv` or `virtualenv` first.
+
+1. A little script downloads the most recent PMIDs included in the LitCovid dataset and creates the necessary `data` directories. The whole dataset is then annotated for the 10 different CRAFT vocabularies:
 
 ```
 CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
 ```
 
-2. OGER is first called: It downloads the articles and annotates them. For every vocabulary, it generates one big `data/oger/$VOCABULARY.conll` file containing all the articles and annotations.
+2. OGER is called: It downloads the articles and annotates them. For every vocabulary, it generates one big `data/oger/$VOCABULARY.conll` file containing all the articles and annotations.
 3. BioBert preprocessed the articles, and then predicts spans and ids for each of the vocabularies (into `data/biobert/CHEBI-ids.labels` etc.)
 4. The outputs of OGER and BB are harmonised using `harmonise.py`, 
 5. An additional merge step joins the 10 different vocabulary files, and searches the document again using a covid-specific, manually crafted dictionary (`oger/merge/covid19.tsv`)
