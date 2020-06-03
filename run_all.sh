@@ -14,8 +14,10 @@ cd $home/oger
 
 # during this step, it tends to fail a few times at first:
 # OGER will whine about some articles not being available
-# add them to the covid.py, and run step 1 again until
+# add them to the covid.py in BAD_IDs, and run step 1 again until
 # OGER complains no more.
+
+# It might also make sense to diff the old ID list against the new one
 
 for value in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
 do
@@ -40,7 +42,7 @@ time python3 biobert_predict.py \
 
 # refer to the readme.md for more information
 cd $home
-for SERVER in 1 2 3 ...
+for SERVER in asbru gimli idavoll vigrid
 do
 ssh $SERVER 'bash -s' < run_bb_$SERVER.sh
 done
