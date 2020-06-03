@@ -37,7 +37,13 @@ cp $collection ../data/oger/$value.conll
 rm -r ../data/oger/$value
 done
 
+
 # 3: RUNNING BIOBERT
+
+# If you take note of the number of predictions written in the preprocessing step
+# You can get an idea of progress in the actuall processing step, which tends to
+# take quite long.
+
 cd $home/biobert
 echo '3.1: Preprocessing for BB'
 time python3 biobert_predict.py \
@@ -50,6 +56,7 @@ time python3 biobert_predict.py \
 cd $home
 for SERVER in asbru gimli idavoll vigrid
 do
+echo '3.2: Launching BB screens'
 ssh $SERVER 'bash -s' < run_bb_$SERVER.sh
 done
 
@@ -77,6 +84,9 @@ do
 echo '4: Harmonising' $v
 python harmonise.py -t data/harmonised/$v.conll -o data/oger/$v.conll -b data/biobert.tokens -i data/biobert/$v-ids.labels -s data/biobert/$v-spans.labels -m $k
 done
+
+# PR-spans didn't work
+# NCBITaxon-spans
 
 
 # 5: MERGING

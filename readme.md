@@ -66,8 +66,6 @@ do
 oger run -s config/common.ini config/$value.ini -o ../data/oger/$value
 ```
 
-* Right now, this fails for NCBITaxon for some `lxml` library error.
-
 ### 2.3 BioBert
 
 ```bash
