@@ -6,7 +6,7 @@ All the outputs of this pipeline will finally be linked [here](https://pub.cl.uz
 
 The python scripts need some libraries that are listed in the `Pipfile`, make sure to start your `pipenv` or `virtualenv` first.
 
-1. A little script downloads the most recent PMIDs included in the LitCovid dataset and creates the necessary `data` directories. The whole dataset is then annotated for the 10 different CRAFT vocabularies:
+1. A little script downloads the most recent PMIDs included in the LitCovid dataset, computes the differences towards the last update and creates the necessary `data` directories. The whole dataset is then annotated for the 10 different CRAFT vocabularies:
 
 ```
 CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON

@@ -2,6 +2,9 @@
 
 home=$(pwd)
 
+# Script cannot be run as is, since some steps take quite long
+# Instead, copy & paste the individual steps as needed.
+
 echo '0: Creating directories, backing up old data'
 mv data data.$(date +'%d%m%Y')
 mkdir data data/ids/ data/oger/ data/biobert/ data/harmonised/ data/pubannotation/ data/merged data/merged/brat/ data/public/
@@ -9,15 +12,18 @@ mkdir data data/ids/ data/oger/ data/biobert/ data/harmonised/ data/pubannotatio
 echo '1: Downloading PMIDs'
 python -c 'import covid; covid.get_pmids()'
 
+# differences
+diff --new-line-format="" --unchanged-line-format="" data/ids/all_pmids.txt data.$(date +'%d%m%Y')/ids/all_pmids.txt > data/ids/pmids.txt
+
+
 # 2: RUNNING OGER
 cd $home/oger
 
-# during this step, it tends to fail a few times at first:
-# OGER will whine about some articles not being available
-# add them to the covid.py in BAD_IDs, and run step 1 again until
-# OGER complains no more.
-
-# It might also make sense to diff the old ID list against the new one
+# During this step, it tends to fail a few times at first:
+# OGER will whine about some articles not being available.
+# Add them to the covid.py in BAD_IDs, and delete them from
+# pmids.txt until OGER complains no more. Usually, it's about
+# 10 PMIDs that need removing.
 
 for value in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
 do
