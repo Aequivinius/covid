@@ -31,8 +31,8 @@ BAD_PMIDS = ['32150360',
              '32297223']
 
 def get_pmids(outpath='data/ids/'):
-    tsv_output = os.path.join(outpath, 'pmids.tsv')
-    txt_output = os.path.join(outpath, 'pmids.txt')
+    tsv_output = os.path.join(outpath, 'all_pmids.tsv')
+    txt_output = os.path.join(outpath, 'all_pmids.txt')
 
     urllib.request.urlretrieve(PMID_URL, tsv_output)
     dataf = pd.read_csv(tsv_output, sep='\t', comment='#')
