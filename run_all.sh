@@ -131,4 +131,4 @@ cp data/public/txt/* /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/pub
 tar -czvf /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid/litcovid19.txt.tgz /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid/litcovid19.txt
 
 # Verify for EuroPMC
-
+python -c 'import covid; covid.get_naked_conll()'
