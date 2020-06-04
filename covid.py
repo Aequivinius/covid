@@ -84,6 +84,15 @@ def conll_collection_to_jsons(inpath='data/merged/collection.conll',
             json.dump(good_json, g)
 
 
+def get_naked_conll(inpath='oger/collection.conll',
+                    outpath='data/collection.naked.conll'):
+    pl = PipelineServer()
+    coll = pl.load_one(inpath, 'conll')
+    for s in coll.get_subelements('sentence'):
+        s.entities.clear()
+    with open(outpath, 'w') as f:
+        pl.write(coll, 'conll', f, conll_include='docid offsets')
+
 def conll_collection_to_txts(inpath='data/merged/collection.conll',
                              outpath='data/public/txt'):
     pl = PipelineServer(Router())

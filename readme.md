@@ -122,7 +122,7 @@ python harmonise.py -t data/harmonised_conll/$v.conll -o data/oger/$v.conll -b d
 ### 2.5 merging
 
 * in `oger-settings-all.ini` , look at ` export_format = bioc_json` and add necessary output formats. In `oger-postfilter-all.ini`, make sure the `input-directory` is correct. Also, in the `oger` directory, there needs to be a `collection.conll` file that the script uses to extract ids of the articles to process.
-* Note that right now, `export_format = bioc_json` and `pubanno_json` produce `.json` files that overwrite each other.
+* Note that right now, `export_format = bioc_json` and `pubanno_json` produce `.json` files that overwrite each other. Because of that, this step is perfomed several times with different settings (for PA and EuroPMC).
 
 ```bash
 # pwd = oger
@@ -131,12 +131,6 @@ oger run -s oger-settings-all.ini
 
 ### 2.6 Distribution
 
-* the harmonised `.conll`-collection files are split into individual articles and converted into `.json`, and `.tgz`-archived so they can be uploaded to PA.
-
-```bash
-python -c 'import covid; covid.conll_collection_to_jsons()'
-```
-
-* The PA project is found [here](http://pubannotation.org/projects/LitCovid-OGER-BB). Before uploading the annotations, add the most recent documents by importing them from the LitCovid-docs project. Then upload the `pubannotation.tgz` file, chosing **replace**. Note that currently, this doesn't work when using Chrome browser.
-* For brat, files need to go  `/mnt/shared/apaches/transfer/brat/brat_ontogene/data`
-* BioC, TSV and TXT files generated and moved to the respective folders.
+* In PubAnnotation ([here](http://pubannotation.org/projects/LitCovid-OGER-BB)), you might have to add more documents to the collection by uploading the `pmids.txt` generated in the first step. Then, upload the `collection.pubannotation.json`
+* BioC, TXT and TSV files are created and moved to their respective destinations
+* To upload to EuroPMC, there needs to be a separate run with using only 4 vocabularies (CL, MOP, SO, UBERON); otherwise there will be `unknown` types in the final json, which EuroPMC doesn't like.
