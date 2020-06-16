@@ -6,7 +6,6 @@ echo '0: Creating directories, backing up old data'
 mv data data.$(date +'%d%m%Y')
 mkdir data data/ids data/oger_pmc/ data/biobert_pmc/ data/harmonised_pmc/ data/harmonised_json data/pubannotation_pmc/ data/merged_pmc data/merged_pmc/brat/ data/public/
 
-
 # 2: RUNNING OGER
 cd $home/oger
 

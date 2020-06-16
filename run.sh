@@ -5,18 +5,30 @@ home=$(pwd)
 # Script cannot be run as is, since some steps take quite long
 # Instead, copy & paste the individual steps as needed.
 
+###########################
+# 0: Setting up directories
+###########################
 echo '0: Creating directories, backing up old data'
 mv data data.$(date +'%d%m%Y')
 mkdir data data/ids/ data/oger/ data/biobert/ data/harmonised/ data/merged data/merged/brat/ data/public/
 
+# For PMC:
+mkdir data data/ids data/oger_pmc/ data/biobert_pmc/ data/harmonised_pmc/ data/harmonised_json data/pubannotation_pmc/ data/merged_pmc data/merged_pmc/brat/ data/public/
+
+################
+# 1: Getting IDs
+################
 echo '1: Downloading PMIDs'
 python -c 'import covid; covid.get_pmids()'
 
 # differences
 diff --new-line-format="" --unchanged-line-format="" data/ids/all_pmids.txt data.$(date +'%d%m%Y')/ids/all_pmids.txt > data/ids/pmids.txt
 
+# for PMC, use the pmcods_to_txt() from covid.py
 
+#################
 # 2: RUNNING OGER
+#################
 cd $home/oger
 
 # During this step, it tends to fail a few times at first:
@@ -29,16 +41,28 @@ for value in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
 do
 echo '2: Running OGER for' $value
 time oger run -s config/common.ini config/$value.ini -o ../data/oger/$value
+time oger run -s config/common_pmc.ini config/$value.ini -o ../data/oger_pmc/$value
 echo ''
+done
+
+# this file is necessary for later merge
+cp ../data/oger_pmc/CHEBI/*.bioc_j  collection_pmc.bioc_json
 
 # 2: data housekeeping
+for value in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
+do
 collection=$(ls -t ../data/oger/$value/*.conll | head -n1)
 cp $collection ../data/oger/$value.conll
 rm -r ../data/oger/$value
+
+collection=$(ls -t ../data/oger_pmc/$value/*.conll | head -n1)
+cp $collection ../data/oger_pmc/$value.conll
+rm -r ../data/oger_pmc/$value
 done
 
-
+####################
 # 3: RUNNING BIOBERT
+####################
 
 # If you take note of the number of predictions written in the preprocessing step
 # You can get an idea of progress in the actuall processing step, which tends to

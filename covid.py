@@ -48,6 +48,29 @@ def get_pmids(outpath='data/ids/'):
     dataf.to_csv(txt_output, sep=' ', index=False, header=False)
 
 
+def pmcods_to_txt(inpath='data/ids/PMID-PMCID_15062020.ods',
+                  old='data/ids/old_pmcids.txt'):
+    newf = pd.read_excel(inpath, engine="odf")
+    newf = newf[['PMCID']]
+    newf['PMCID'].replace("", numpy.nan, inplace=True)
+    newf.dropna(subset=['PMCID'], inplace=True)
+    newf['PMCID'] = newf['PMCID'].str.slice(3)
+    outpath = os.path.join(os.path.dirname(inpath), 'new_pmcids.txt')
+    newf['PMCID'].to_csv(outpath, index=False, header=False)
+
+    oldf = pd.read_csv(old, header=None, names=["PMCID"])
+
+    news = set(newf['PMCID'].astype(int))
+    olds = set(oldf['PMCID'])
+
+    diffs = news.difference(olds)
+
+    # remove = [ '7068758'
+
+    outpath = os.path.join(os.path.dirname(inpath), 'pmcids.txt')
+    with open(outpath, "w") as g:
+        g.write("\n".join(str(item) for item in diffs))
+
 def pmctsv_to_txt(inpath):
     dataf = pd.read_csv(inpath,header=0,delimiter='\t')
     dataf['PMCID'] = dataf['PMCID'].str.slice(3)

@@ -1,6 +1,6 @@
-# OGER / BioBERT / PubAnnotation
+# OGER / BB / PA
 
-All the outputs of this pipeline will finally be linked [here](https://pub.cl.uzh.ch/projects/COVID19/). This documentation only provides a superficial view on how the different scripts are called and how they depend on each other, for more precise instructions see `run_all.sh`.
+All the outputs of this pipeline will finally be linked [here](https://pub.cl.uzh.ch/projects/COVID19/). This documentation only provides a superficial view on how the different scripts are called and how they depend on each other, for more precise instructions see `run.sh`.
 
 ### 1.1 General Pipeline
 
@@ -52,6 +52,8 @@ data
 ```bash
 python -c 'import covid; covid.get_pmids()'
 ```
+
+For PMC, supply the `.ods` file and the `pmcid.txt` from the previous run (or just an empty file) to the `covid.pmcods_to_txt()`function.
 
 ### 2.2 OGER
 
