@@ -2,22 +2,28 @@
 
 home=$(pwd)
 
+# Script cannot be run as is, since some steps take quite long
+# Instead, copy & paste the individual steps as needed.
+
 echo '0: Creating directories, backing up old data'
 mv data data.$(date +'%d%m%Y')
-mkdir data data/ids/ data/oger/ data/biobert/ data/harmonised/ data/pubannotation/ data/merged data/merged/brat/ data/public/
+mkdir data data/ids/ data/oger/ data/biobert/ data/harmonised/ data/merged data/merged/brat/ data/public/
 
 echo '1: Downloading PMIDs'
 python -c 'import covid; covid.get_pmids()'
 
+# differences
+diff --new-line-format="" --unchanged-line-format="" data/ids/all_pmids.txt data.$(date +'%d%m%Y')/ids/all_pmids.txt > data/ids/pmids.txt
+
+
 # 2: RUNNING OGER
 cd $home/oger
 
-# during this step, it tends to fail a few times at first:
-# OGER will whine about some articles not being available
-# add them to the covid.py in BAD_IDs, and run step 1 again until
-# OGER complains no more.
-
-# It might also make sense to diff the old ID list against the new one
+# During this step, it tends to fail a few times at first:
+# OGER will whine about some articles not being available.
+# Add them to the covid.py in BAD_IDs, and delete them from
+# pmids.txt until OGER complains no more. Usually, it's about
+# 10 PMIDs that need removing.
 
 for value in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
 do
@@ -31,7 +37,13 @@ cp $collection ../data/oger/$value.conll
 rm -r ../data/oger/$value
 done
 
+
 # 3: RUNNING BIOBERT
+
+# If you take note of the number of predictions written in the preprocessing step
+# You can get an idea of progress in the actuall processing step, which tends to
+# take quite long.
+
 cd $home/biobert
 echo '3.1: Preprocessing for BB'
 time python3 biobert_predict.py \
@@ -44,6 +56,7 @@ time python3 biobert_predict.py \
 cd $home
 for SERVER in asbru gimli idavoll vigrid
 do
+echo '3.2: Launching BB screens'
 ssh $SERVER 'bash -s' < run_bb_$SERVER.sh
 done
 
@@ -95,25 +108,27 @@ rm -r merged-eupmc
 # 6: DISTRIBUTION
 echo '6: Splitting, .tgz-ing and moving to DL directories'
 cd $home
-# this needs to be changed to utf-8, because otherwise it breaks
-# for some articles on PubAnnotation
-python -c 'import covid; covid.conll_collection_to_jsons()'
-tar -czvf data/pubannotation.tgz data/pubannotation/
 
-cp data/merged/collection.bioc.json data/public/litcovid19.bioc.json
-tar -czvf data/public/litcovid19.bioc.json.tgz data/public/litcovid19.bioc.json
+# Upload this to PubAnnotation
+cp data/merged/collection.pubannotation.json data/collection.pubannotation.json
 
-cp data/merged/collection.tsv data/public/litcovid19.tsv
-tar -czvf data/public/litcovid19.tsv.tgz data/public/litcovid19.tsv
-
-python -c 'import covid; covid.conll_collection_to_txts()'
-tar -czvf data/public/litcovid19.txt.tgz data/public/txt
-
+# Creating Brat files and adding new files to directory
 python -c 'import covid; covid.bioc_to_brat()'
-mv /mnt/shared/apaches/transfer/brat/brat_ontogene/data/LitCovid /mnt/shared/apaches/transfer/brat/brat_ontogene/data/LitCovid.$(date +'%d%m%Y')
-mkdir /mnt/shared/apaches/transfer/brat/brat_ontogene/data/LitCovid
+cp -r /mnt/shared/apaches/transfer/brat/brat_ontogene/data/LitCovid /mnt/shared/apaches/transfer/brat/brat_ontogene/data/LitCovid.$(date +'%d%m%Y')
 cp data/merged/brat/* /mnt/shared/apaches/transfer/brat/brat_ontogene/data/LitCovid
 
-mv /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid.$(date +'%d%m%Y')
-mkdir /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid/
-cp data/public/* /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid/
+# Moving and merging BioC, TSV and TXT files
+cp data/merged/collection.bioc.json data/public/litcovid19.bioc.json
+cp data/public/litcovid19.bioc.json /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid/litcovid19.bioc/litcovid19.$(date +'%d%m%Y').bioc.json
+tar -czvf /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid/litcovid19.bioc.json.tgz /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid/litcovid19.bioc
+
+cp data/merged/collection.tsv data/public/litcovid19.tsv
+cat data/public/litcovid19.tsv >> /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid/litcovid19.tsv
+tar -czvf /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid/litcovid19.tsv.tgz /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid/litcovid19.tsv
+
+python -c 'import covid; covid.conll_collection_to_txts()'
+cp data/public/txt/* /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid/litcovid19.txt
+tar -czvf /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid/litcovid19.txt.tgz /mnt/storage/clfiles/projects/clresources/pub.cl.uzh.ch/public/https/projects/COVID19/LitCovid/litcovid19.txt
+
+# Verify for EuroPMC
+python -c 'import covid; covid.get_naked_conll()'

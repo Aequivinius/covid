@@ -34,7 +34,9 @@ BAD_PMIDS = ['32150360',
              '32410779',
              '32407043', '32405025', '32404815', '32401466', '32401463',
              '32394184', '32383101', '32382471', '32378179', '32350846',
-             '32341907']
+             '32341907', '32479040', '32474290', '32473452', '32454425',
+             '32332323', '32282624', '32251136', '32243304', '32243302',
+             '32086404', '32054798']
 
 def get_pmids(outpath='data/ids/'):
     tsv_output = os.path.join(outpath, 'all_pmids.tsv')
@@ -81,6 +83,15 @@ def conll_collection_to_jsons(inpath='data/merged/collection.conll',
             g.seek(0)
             json.dump(good_json, g)
 
+
+def get_naked_conll(inpath='oger/collection.conll',
+                    outpath='data/collection.naked.conll'):
+    pl = PipelineServer()
+    coll = pl.load_one(inpath, 'conll')
+    for s in coll.get_subelements('sentence'):
+        s.entities.clear()
+    with open(outpath, 'w') as f:
+        pl.write(coll, 'conll', f, conll_include='docid offsets')
 
 def conll_collection_to_txts(inpath='data/merged/collection.conll',
                              outpath='data/public/txt'):
