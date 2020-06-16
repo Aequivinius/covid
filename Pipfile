@@ -10,6 +10,7 @@ jupyter = "*"
 pandas = "*"
 numpy = "*"
 oger = {git = "https://github.com/OntoGene/OGER.git"}
+odfpy = "*"
 
 [requires]
 python_version = "3.8"
