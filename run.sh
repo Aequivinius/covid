@@ -21,7 +21,7 @@ mkdir data data/ids data/oger_pmc/ data/biobert_pmc/ data/harmonised_pmc/ data/h
 echo '1: Downloading PMIDs'
 python -c 'import covid; covid.get_pmids()'
 
-# differences
+# differences (change date to last time you ran the pipeline)
 diff --new-line-format="" --unchanged-line-format="" data/ids/all_pmids.txt data.$(date +'%d%m%Y')/ids/all_pmids.txt > data/ids/pmids.txt
 
 # for PMC, use the pmcods_to_txt() from covid.py
@@ -41,12 +41,18 @@ for value in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
 do
 echo '2: Running OGER for' $value
 time oger run -s config/common.ini config/$value.ini -o ../data/oger/$value
+echo ''
+done
+
+for value in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
+do
+echo '2: Running OGER for' $value
 time oger run -s config/common_pmc.ini config/$value.ini -o ../data/oger_pmc/$value
 echo ''
 done
 
 # this file is necessary for later merge
-cp ../data/oger_pmc/CHEBI/*.bioc_j  collection.bioc_json
+cp ../data/oger/CHEBI/*.bioc_j  collection.bioc_json
 cp ../data/oger_pmc/CHEBI/*.bioc_j  collection_pmc.bioc_json
 
 # 2: data housekeeping
@@ -55,7 +61,10 @@ do
 collection=$(ls -t ../data/oger/$value/*.conll | head -n1)
 cp $collection ../data/oger/$value.conll
 rm -r ../data/oger/$value
+done
 
+for value in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
+do
 collection=$(ls -t ../data/oger_pmc/$value/*.conll | head -n1)
 cp $collection ../data/oger_pmc/$value.conll
 rm -r ../data/oger_pmc/$value
@@ -79,7 +88,7 @@ time python3 biobert_predict.py \
 
 # refer to the readme.md for more information
 cd $home
-for SERVER in 1 2 3 ...
+for SERVER in asbru gimli idavoll vigrid
 do
 echo '3.2: Launching BB screens'
 ssh $SERVER 'bash -s' < run_bb_$SERVER.sh
@@ -99,7 +108,7 @@ for v in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
 do
 for s in spans ids
 do
-mv biobert/$v-$s/biobert.labels biobert/$v-$s.labels.tmp
+mv biobert/$v-$s/biobert.labels biobert/$v-$s.labels
 rm -r biobert/$v-$s
 done
 done
