@@ -31,11 +31,9 @@ diff --new-line-format="" --unchanged-line-format="" data/ids/all_pmids.txt data
 #################
 cd $home/oger
 
-# During this step, it tends to fail a few times at first:
-# OGER will whine about some articles not being available.
-# Add them to the covid.py in BAD_IDs, and delete them from
-# pmids.txt until OGER complains no more. Usually, it's about
-# 10 PMIDs that need removing.
+# During this step, OGER will produce errors for some IDs. These should be
+# noted manually in the bad_pmids.txt so that they will not be tried to DL
+# again.
 
 for value in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
 do
@@ -51,11 +49,8 @@ time oger run -s config/common_pmc.ini config/$value.ini -o ../data/oger_pmc/$va
 echo ''
 done
 
-# this file is necessary for later merge
-cp ../data/oger/CHEBI/*.bioc_j  collection.bioc_json
-cp ../data/oger_pmc/CHEBI/*.bioc_j  collection_pmc.bioc_json
-
 # 2: data housekeeping
+cp ../data/oger/CHEBI/*.bioc_j  collection.bioc_json # this file is necessary for later merge
 for value in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
 do
 collection=$(ls -t ../data/oger/$value/*.conll | head -n1)
@@ -63,6 +58,7 @@ cp $collection ../data/oger/$value.conll
 rm -r ../data/oger/$value
 done
 
+cp ../data/oger_pmc/CHEBI/*.bioc_j  collection_pmc.bioc_json # this file is necessary for later merge
 for value in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
 do
 collection=$(ls -t ../data/oger_pmc/$value/*.conll | head -n1)
@@ -88,7 +84,7 @@ time python3 biobert_predict.py \
 
 # refer to the readme.md for more information
 cd $home
-for SERVER in asbru gimli idavoll vigrid
+for SERVER in 1 2 3 ...
 do
 echo '3.2: Launching BB screens'
 ssh $SERVER 'bash -s' < run_bb_$SERVER.sh
