@@ -83,6 +83,8 @@ time python3 biobert_predict.py \
 --vocab_file=common/vocab.txt
 
 # refer to the readme.md for more information
+# to restrict CPU usage, change variables in tf_threads.py
+
 cd $home
 for SERVER in 1 2 3 ...
 do
