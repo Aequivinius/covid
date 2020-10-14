@@ -32,7 +32,7 @@ def pmcods_to_txt(inpath='data/ids/PMID-PMCID_15062020.ods',
     newf['PMCID'].replace("", numpy.nan, inplace=True)
     newf.dropna(subset=['PMCID'], inplace=True)
     newf['PMCID'] = newf['PMCID'].str.slice(3)
-    outpath = os.path.join(os.path.dirname(inpath), 'new_pmcids.txt')
+    outpath = os.path.join(os.path.dirname(inpath), 'pmcids.txt')
     newf['PMCID'].to_csv(outpath, index=False, header=False)
 
     oldf = pd.read_csv(old, header=None, names=["PMCID"])
@@ -42,9 +42,9 @@ def pmcods_to_txt(inpath='data/ids/PMID-PMCID_15062020.ods',
 
     diffs = news.difference(olds)
 
-    # remove = [ '7068758'
+    # TODO: remove bad_pmcids
 
-    outpath = os.path.join(os.path.dirname(inpath), 'pmcids.txt')
+    outpath = os.path.join(os.path.dirname(inpath), 'new_pmcids.txt')
     with open(outpath, "w") as g:
         g.write("\n".join(str(item) for item in diffs))
 

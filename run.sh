@@ -13,6 +13,8 @@ mv data data.$(date +'%d%m%Y')
 mkdir data data/ids/ data/oger/ data/biobert/ data/harmonised/ data/merged data/merged/brat/ data/public/ data/public/txt
 
 # For PMC:
+echo '0: Creating directories, backing up old data'
+mv data data.$(date +'%d%m%Y')
 mkdir data data/ids data/oger_pmc/ data/biobert_pmc/ data/harmonised_pmc/ data/harmonised_json data/pubannotation_pmc/ data/merged_pmc data/merged_pmc/brat/ data/public/ data/public/txt
 
 ################
@@ -25,6 +27,10 @@ python -c 'import covid; covid.get_pmids()'
 diff --new-line-format="" --unchanged-line-format="" data/ids/all_pmids.txt data.$(date +'%d%m%Y')/ids/all_pmids.txt > data/ids/pmids.txt
 
 # for PMC, use the pmcods_to_txt() from covid.py
+# place the pmcids.txt file from the last run's data/ids into the current data/ids
+# and rename it to old_pmcids.txt. Place the new .ods into the new data/ids, too
+python -c 'import covid; covid.pmcods_to_txt(inpath="data/ids/PMID-PMCID_02092020.ods")'
+
 
 #################
 # 2: RUNNING OGER
@@ -42,10 +48,11 @@ time oger run -s config/common.ini config/$value.ini -o ../data/oger/$value
 echo ''
 done
 
+# PMC
 for value in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
 do
 echo '2: Running OGER for' $value
-time oger run -s config/common_pmc.ini config/$value.ini -o ../data/oger_pmc/$value
+screen -S $value -dm oger run -s config/common_pmc.ini config/$value.ini -o ../data/oger_pmc/$value
 echo ''
 done
 
@@ -58,7 +65,9 @@ cp $collection ../data/oger/$value.conll
 rm -r ../data/oger/$value
 done
 
-cp ../data/oger_pmc/CHEBI/*.bioc_j  collection_pmc.bioc_json # this file is necessary for later merge
+# this file is necessary for later merge
+# fails if there's more than one file in CHEBI directory
+cp ../data/oger_pmc/CHEBI/*.bioc_j  collection_pmc.bioc_json
 for value in CHEBI CL GO_BP GO_CC GO_MF MOP NCBITaxon PR SO UBERON
 do
 collection=$(ls -t ../data/oger_pmc/$value/*.conll | head -n1)
@@ -80,6 +89,12 @@ time python3 biobert_predict.py \
 --do_preprocess=true \
 --input_text=../data/oger/CHEBI.conll \
 --tf_record=../data/biobert.tf_record \
+--vocab_file=common/vocab.txt
+
+time python3 biobert_predict.py \
+--do_preprocess=true \
+--input_text=../data/oger_pmc/CHEBI.conll \
+--tf_record=../data/biobert_pmc.tf_record \
 --vocab_file=common/vocab.txt
 
 # refer to the readme.md for more information
@@ -196,6 +211,7 @@ cp data/merged/collection.pubannotation.json data/collection.pubannotation.json
 # 6.1 PUBANNOTATION / PMC
 
 python -c 'import covid; covid.conll_collection_to_jsons(inpath="data/merged_pmc/collection_pmc.conll",outpath="data/pubannotation_pmc",sourcedb="PMC")'
+tar -czvf data/pubannotation_pmc.tgz data/pubannotation_pmc/
 
 # 6.2 BRAT / PUBMED
 
