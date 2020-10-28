@@ -1,1 +1,2 @@
 started bb run on 14 X at 1445, 175000 predictions to go
+at 15 X at 1630, it was at 165000

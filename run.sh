@@ -24,7 +24,7 @@ echo '1: Downloading PMIDs'
 python -c 'import covid; covid.get_pmids()'
 
 # differences (change date to last time you ran the pipeline)
-diff --new-line-format="" --unchanged-line-format="" data/ids/all_pmids.txt data.$CHANGE_ME/ids/all_pmids.txt > data/ids/pmids.txt
+diff --new-line-format="" --unchanged-line-format="" data/ids/all_pmids.txt data.$CHANGEME/ids/all_pmids.txt > data/ids/pmids.txt
 
 # for PMC, use the pmcods_to_txt() from covid.py
 # place the pmcids.txt file from the last run's data/ids into the current data/ids
